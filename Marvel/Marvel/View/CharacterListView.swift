@@ -13,7 +13,9 @@ struct CharacterListView: View {
     var body: some View {
         NavigationView {
             List(viewModel.characters, id: \.name) { character in
-                CharacterRow(character: character)
+                NavigationLink(destination: CharacterDetailView(character: character)) {
+                    CharacterRow(character: character)
+                }
             }
             .navigationTitle("Marvel")
         }
@@ -22,6 +24,7 @@ struct CharacterListView: View {
         }
     }
 }
+
 
 struct CharacterRow: View {
     var character: Character

@@ -19,6 +19,7 @@
 		07762F842B04CEF700DAE444 /* CharacterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F832B04CEF700DAE444 /* CharacterListView.swift */; };
 		07762F882B04CF5300DAE444 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F872B04CF5300DAE444 /* Character.swift */; };
 		07762F8A2B04CFA000DAE444 /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F892B04CFA000DAE444 /* CharacterListViewModel.swift */; };
+		07762F8C2B07D1DD00DAE444 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F8B2B07D1DD00DAE444 /* CharacterDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		07762F832B04CEF700DAE444 /* CharacterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListView.swift; sourceTree = "<group>"; };
 		07762F872B04CF5300DAE444 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		07762F892B04CFA000DAE444 /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
+		07762F8B2B07D1DD00DAE444 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				07762F832B04CEF700DAE444 /* CharacterListView.swift */,
+				07762F8B2B07D1DD00DAE444 /* CharacterDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				07762F4F2B04C6D800DAE444 /* Persistence.swift in Sources */,
 				07762F882B04CF5300DAE444 /* Character.swift in Sources */,
 				07762F842B04CEF700DAE444 /* CharacterListView.swift in Sources */,
+				07762F8C2B07D1DD00DAE444 /* CharacterDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
