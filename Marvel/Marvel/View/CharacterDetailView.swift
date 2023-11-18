@@ -1,7 +1,8 @@
 //
-// CharacterDetailView.swift
-// Marvel
-// Created by Juan Carlos Torrejón Cañedo on 17/11/23.
+//  CharacterDetailView.swift
+//  Marvel
+//  Created by Juan Carlos Torrejón Cañedo on 17/11/23.
+//
 
 import SwiftUI
 
@@ -27,26 +28,29 @@ struct CharacterDetailView: View {
                         EmptyView() // Por si acaso
                     }
                 }
-                .frame(width: 300, height: 225)
+                .frame(width: 350, height: 525)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
                 .padding()
 
                 Text(character.name)
-                    .font(.largeTitle)
+                    .font(.system(size: 26, weight: .bold, design: .default))
                     .padding(.top, 20)
 
                 // Descripción del personaje
                 if !character.description.isEmpty {
                     Text(character.description)
-                        .font(.body)
+                        .font(.system(size: 18))
                         .padding([.top, .bottom], 10)
                 }
+
+                Divider()
 
                 // Sección de series
                 if isLoading {
                     ProgressView("Loading series...")
                 } else {
                     if !seriesList.isEmpty {
-                        Text("Series")
+                        Text("Series Featuring \(character.name)")
                             .font(.headline)
                             .padding([.top, .bottom], 10)
 
@@ -58,6 +62,7 @@ struct CharacterDetailView: View {
             }
         }
         .padding()
+        .background(Color(.secondarySystemBackground))
         .navigationTitle(character.name)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -96,14 +101,17 @@ struct SeriesRow: View {
                     EmptyView() // Por si acaso
                 }
             }
-            .frame(width: 150, height: 225)
+            .frame(width: 100, height: 150)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
 
             VStack(alignment: .leading) {
                 Text(series.title)
                     .font(.headline)
                 Text(series.description ?? "")
                     .font(.body)
+                    .foregroundColor(.gray)
             }
+            .padding(.leading, 10)
         }
         .padding()
     }

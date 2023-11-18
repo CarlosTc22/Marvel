@@ -2,6 +2,7 @@
 //  Character.swift
 //  Marvel
 //  Created by Juan Carlos Torrejón Cañedo on 15/11/23.
+//
 
 import Foundation
 

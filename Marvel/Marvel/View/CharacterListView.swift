@@ -2,11 +2,12 @@
 //  CharacterListView.swift
 //  Marvel
 //  Created by Juan Carlos Torrejón Cañedo on 15/11/23.
+//
 
 import SwiftUI
 
 struct CharacterListView: View {
-    @ObservedObject var viewModel: CharacterListViewModel
+    @ObservedObject var viewModel = CharacterListViewModel()
 
     var body: some View {
         NavigationView {
@@ -44,29 +45,29 @@ struct CharacterRow: View {
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: character.thumbnail.fullPath())) { phase in
-                if let image = phase.image {
+                switch phase {
+                case .success(let image):
                     image.resizable()
-                } else if phase.error != nil {
-                    // Si hay un error, lo muestra aquí para depurar
-                    Text("Error al cargar la imagen")
-                } else {
-                    Image(systemName: "person.fill")
+                         .aspectRatio(contentMode: .fit)
+                case .failure(_):
+                    Image(systemName: "photo") // Imagen de error
+                case .empty:
+                    ProgressView() // Cargando...
+                @unknown default:
+                    EmptyView() // Por si acaso
                 }
             }
-            .frame(width: 150, height: 225)
-            .aspectRatio(contentMode: .fill)
-            .clipped()
+            .frame(width: 100, height: 150)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
 
             VStack(alignment: .leading) {
                 Text(character.name)
                     .font(.headline)
+                    .lineLimit(2)
             }
-            .frame(minHeight: 100)
+            .padding(.leading, 10)
         }
-        .onAppear {
-            // Imprimir la URL para depuración
-            print("Cargando imagen desde URL: \(character.thumbnail.fullPath())")
-        }
+        .padding()
     }
 }
 
