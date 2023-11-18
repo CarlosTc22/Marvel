@@ -10,15 +10,23 @@ import SwiftUI
 @MainActor
 class CharacterListViewModel: ObservableObject {
     @Published var characters: [Character] = []
+    private var offset = 0
+    private let limit = 20 
+    private (set) var canLoadMoreCharacters = true
 
     func loadCharacters() {
+        guard canLoadMoreCharacters else { return }
+
         Task {
             do {
-                let fetchedCharacters = try await NetworkManager.shared.fetchCharacters()
-                self.characters = fetchedCharacters 
+                let fetchedCharacters = try await NetworkManager.shared.fetchCharacters(offset: offset, limit: limit)
+                if fetchedCharacters.count < limit {
+                    canLoadMoreCharacters = false
+                }
+                self.characters.append(contentsOf: fetchedCharacters)
+                offset += fetchedCharacters.count
             } catch {
                 print("Error fetching characters: \(error)")
-                // Manejar el error según sea necesario
             }
         }
     }

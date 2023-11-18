@@ -1,9 +1,6 @@
-//
 //  CharacterListView.swift
 //  Marvel
-//
 //  Created by Juan Carlos Torrejón Cañedo on 15/11/23.
-//
 
 import SwiftUI
 
@@ -12,15 +9,30 @@ struct CharacterListView: View {
 
     var body: some View {
         NavigationView {
-            List(viewModel.characters, id: \.name) { character in
-                NavigationLink(destination: CharacterDetailView(character: character)) {
-                    CharacterRow(character: character)
+            List {
+                ForEach(viewModel.characters, id: \.id) { character in
+                    NavigationLink(destination: CharacterDetailView(character: character)) {
+                        CharacterRow(character: character)
+                    }
+                }
+                // Vista al final de la lista para cargar más personajes
+                if viewModel.canLoadMoreCharacters {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        viewModel.loadCharacters()
+                    }
                 }
             }
             .navigationTitle("Marvel")
         }
         .onAppear {
-            viewModel.loadCharacters() 
+            if viewModel.characters.isEmpty {
+                viewModel.loadCharacters()
+            }
         }
     }
 }
@@ -30,24 +42,29 @@ struct CharacterRow: View {
 
     var body: some View {
         HStack {
-            if let imageUrl = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)") {
-                AsyncImage(url: imageUrl) { image in
+            AsyncImage(url: URL(string: character.thumbnail.fullPath())) { phase in
+                if let image = phase.image {
                     image.resizable()
-                } placeholder: {
-                    Image(systemName: "person.fill") // Ícono genérico como placeholder
+                } else if phase.error != nil {
+                    // Si hay un error, lo muestra aquí para depurar
+                    Text("Error al cargar la imagen")
+                } else {
+                    Image(systemName: "person.fill")
                 }
-                .frame(width: 50, height: 50)
-            } else {
-                Image(systemName: "person.fill") // Ícono genérico si la URL es inválida
-                    .frame(width: 50, height: 50)
             }
+            .frame(width: 125, height: 125)
+            .aspectRatio(contentMode: .fill)
+            .clipped()
 
             VStack(alignment: .leading) {
                 Text(character.name)
                     .font(.headline)
-                Text(character.description)
-                    .font(.subheadline)
             }
+            .frame(minHeight: 100)
+        }
+        .onAppear {
+            // Imprimir la URL para depuración
+            print("Cargando imagen desde URL: \(character.thumbnail.fullPath())")
         }
     }
 }
@@ -57,4 +74,3 @@ struct CharacterListView_Previews: PreviewProvider {
         CharacterListView(viewModel: CharacterListViewModel())
     }
 }
-

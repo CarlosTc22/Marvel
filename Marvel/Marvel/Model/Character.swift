@@ -3,7 +3,6 @@
 //  Marvel
 //
 //  Created by Juan Carlos Torrejón Cañedo on 15/11/23.
-//
 
 import Foundation
 
@@ -31,6 +30,13 @@ struct Character: Codable {
 struct Thumbnail: Codable {
     let path: String
     let `extension`: String
+
+    // Función para construir la URL completa de la imagen
+    func fullPath() -> String {
+        let variant = "portrait_medium"
+        return "\(path)/\(variant).\(`extension`)"
+
+    }
 }
 
 struct ComicList: Codable {

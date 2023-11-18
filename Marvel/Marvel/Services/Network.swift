@@ -1,4 +1,3 @@
-//
 //  Network.swift
 //  Marvel
 //
@@ -15,10 +14,10 @@ struct AuthParameters {
         "dc93b784b1952fa4293fe83b5e139afd"
     }
     static var timestamp: String {
-        "1"  // Un valor fijo
+        "1"
     }
     static var hash: String {
-        "a0ef82cb771859cd981b437c21810a9d" // Asegúrate de que este hash corresponda al timestamp fijo y a tus claves API
+        "a0ef82cb771859cd981b437c21810a9d"
     }
 }
 
@@ -36,6 +35,13 @@ enum APIEndpoint {
         }
         return url
     }
+
+    func urlWithPagination(offset: Int, limit: Int) -> URL {
+        guard let url = URL(string: "\(baseURL)\(self.stringValue)?apikey=\(AuthParameters.apiKey)&ts=\(AuthParameters.timestamp)&hash=\(AuthParameters.hash)&offset=\(offset)&limit=\(limit)") else {
+            fatalError("Invalid URL")
+        }
+        return url
+    }
 }
 
 // Configuración Async-Await para la API de Marvel
@@ -44,8 +50,8 @@ let baseURL = "https://gateway.marvel.com/v1/public/"
 class NetworkManager {
     static let shared = NetworkManager()
 
-    func fetchCharacters() async throws -> [Character] {
-        let request = URLRequest(url: APIEndpoint.characters.url)
+    func fetchCharacters(offset: Int = 0, limit: Int = 20) async throws -> [Character] {
+        let request = URLRequest(url: APIEndpoint.characters.urlWithPagination(offset: offset, limit: limit))
         let (data, response) = try await URLSession.shared.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
@@ -56,3 +62,4 @@ class NetworkManager {
         return marvelResponse.data.results
     }
 }
+
