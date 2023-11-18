@@ -27,27 +27,32 @@ struct CharacterDetailView: View {
                         EmptyView() // Por si acaso
                     }
                 }
-                .frame(width: 300, height: 300)
+                .frame(width: 300, height: 225)
                 .padding()
 
                 Text(character.name)
                     .font(.largeTitle)
                     .padding(.top, 20)
 
-                Text(character.description.isEmpty ? "No description available." : character.description)
-                    .font(.body)
-                    .padding([.top, .bottom], 10)
+                // Descripción del personaje
+                if !character.description.isEmpty {
+                    Text(character.description)
+                        .font(.body)
+                        .padding([.top, .bottom], 10)
+                }
 
-                // Lista de series
+                // Sección de series
                 if isLoading {
                     ProgressView("Loading series...")
                 } else {
-                    Text("Series")
-                        .font(.headline)
-                        .padding([.top, .bottom], 10)
+                    if !seriesList.isEmpty {
+                        Text("Series")
+                            .font(.headline)
+                            .padding([.top, .bottom], 10)
 
-                    ForEach(seriesList, id: \.id) { series in
-                        SeriesRow(series: series)
+                        ForEach(seriesList, id: \.id) { series in
+                            SeriesRow(series: series)
+                        }
                     }
                 }
             }
@@ -91,7 +96,7 @@ struct SeriesRow: View {
                     EmptyView() // Por si acaso
                 }
             }
-            .frame(width: 100, height: 100)
+            .frame(width: 150, height: 225)
 
             VStack(alignment: .leading) {
                 Text(series.title)
@@ -104,13 +109,3 @@ struct SeriesRow: View {
     }
 }
 
-
-// Vista previa con datos de muestra
-struct CharacterDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Ejemplo de personaje para la vista previa
-        let sampleCharacter = Character(id: 1, name: "Spider-Man", description: "Friendly neighborhood Spider-Man", thumbnail: Thumbnail(path: "https://example.com/image", extension: "jpg"), comics: ComicList(items: []), stories: StoryList(items: []), urls: [])
-        
-        CharacterDetailView(character: sampleCharacter)
-    }
-}

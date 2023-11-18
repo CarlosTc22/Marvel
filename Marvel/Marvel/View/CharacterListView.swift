@@ -1,3 +1,4 @@
+//
 //  CharacterListView.swift
 //  Marvel
 //  Created by Juan Carlos Torrejón Cañedo on 15/11/23.
@@ -52,7 +53,7 @@ struct CharacterRow: View {
                     Image(systemName: "person.fill")
                 }
             }
-            .frame(width: 125, height: 125)
+            .frame(width: 150, height: 225)
             .aspectRatio(contentMode: .fill)
             .clipped()
 

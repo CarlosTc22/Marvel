@@ -31,7 +31,7 @@ struct Thumbnail: Codable {
     let `extension`: String
 
     func fullPath() -> String {
-        let variant = "portrait_medium"
+        let variant = "portrait_xlarge"
         return "\(path)/\(variant).\(`extension`)"
     }
 }
