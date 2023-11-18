@@ -20,6 +20,7 @@
 		07762F882B04CF5300DAE444 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F872B04CF5300DAE444 /* Character.swift */; };
 		07762F8A2B04CFA000DAE444 /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F892B04CFA000DAE444 /* CharacterListViewModel.swift */; };
 		07762F8C2B07D1DD00DAE444 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F8B2B07D1DD00DAE444 /* CharacterDetailView.swift */; };
+		07762F8E2B07FBAD00DAE444 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07762F8D2B07FBAD00DAE444 /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		07762F872B04CF5300DAE444 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		07762F892B04CFA000DAE444 /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
 		07762F8B2B07D1DD00DAE444 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
+		07762F8D2B07FBAD00DAE444 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 		07762F802B04CA8000DAE444 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				07762F8D2B07FBAD00DAE444 /* Network.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				07762F8A2B04CFA000DAE444 /* CharacterListViewModel.swift in Sources */,
 				07762F542B04C6D800DAE444 /* ContentView.swift in Sources */,
 				07762F4F2B04C6D800DAE444 /* Persistence.swift in Sources */,
+				07762F8E2B07FBAD00DAE444 /* Network.swift in Sources */,
 				07762F882B04CF5300DAE444 /* Character.swift in Sources */,
 				07762F842B04CEF700DAE444 /* CharacterListView.swift in Sources */,
 				07762F8C2B07D1DD00DAE444 /* CharacterDetailView.swift in Sources */,

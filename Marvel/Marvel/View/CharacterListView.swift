@@ -20,21 +20,27 @@ struct CharacterListView: View {
             .navigationTitle("Marvel")
         }
         .onAppear {
-            viewModel.fetchCharacters()
+            viewModel.loadCharacters() 
         }
     }
 }
-
 
 struct CharacterRow: View {
     var character: Character
 
     var body: some View {
         HStack {
-            Image(systemName: "person.fill") // Ícono genérico
-                .resizable()
+            if let imageUrl = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)") {
+                AsyncImage(url: imageUrl) { image in
+                    image.resizable()
+                } placeholder: {
+                    Image(systemName: "person.fill") // Ícono genérico como placeholder
+                }
                 .frame(width: 50, height: 50)
-                .padding()
+            } else {
+                Image(systemName: "person.fill") // Ícono genérico si la URL es inválida
+                    .frame(width: 50, height: 50)
+            }
 
             VStack(alignment: .leading) {
                 Text(character.name)
@@ -51,5 +57,4 @@ struct CharacterListView_Previews: PreviewProvider {
         CharacterListView(viewModel: CharacterListViewModel())
     }
 }
-
 

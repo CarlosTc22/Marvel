@@ -11,6 +11,9 @@ import SwiftUI
 struct MarvelApp: App {
     let persistenceController = PersistenceController.shared
 
+    init() {
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

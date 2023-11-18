@@ -7,22 +7,19 @@
 
 import SwiftUI
 
+@MainActor
 class CharacterListViewModel: ObservableObject {
-    @Published var characters: [Character] = [
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York"),
-    Character(name: "Spider-Man", description: "Héroe arácnido de Nueva York")]
+    @Published var characters: [Character] = []
 
-    func fetchCharacters() {
-        // Api
+    func loadCharacters() {
+        Task {
+            do {
+                let fetchedCharacters = try await NetworkManager.shared.fetchCharacters()
+                self.characters = fetchedCharacters 
+            } catch {
+                print("Error fetching characters: \(error)")
+                // Manejar el error según sea necesario
+            }
+        }
     }
 }
-
