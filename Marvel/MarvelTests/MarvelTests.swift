@@ -11,17 +11,17 @@ import XCTest
 final class MarvelTests: XCTestCase {
     
     var viewModel: CharacterListViewModel!
-
+    
     @MainActor override func setUpWithError() throws {
         super.setUp()
         viewModel = CharacterListViewModel()
     }
-
+    
     override func tearDownWithError() throws {
         viewModel = nil
         super.tearDown()
     }
-
+    
     @MainActor func testCharacterLoading() throws {
         let expectation = self.expectation(description: "CharacterLoading")
         viewModel.loadCharacters()
@@ -31,5 +31,4 @@ final class MarvelTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertFalse(viewModel.characters.isEmpty, "No characters loaded")
     }
-
 }

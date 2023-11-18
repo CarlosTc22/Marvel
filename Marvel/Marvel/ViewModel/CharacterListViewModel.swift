@@ -7,8 +7,16 @@
 
 import SwiftUI
 
+// MARK: - Protocolo -
+protocol CharacterListViewModelProtocol: ObservableObject {
+    var characters: [Character] { get }
+    var canLoadMoreCharacters: Bool { get }
+    func loadCharacters()
+}
+
+// MARK: - Clase -
 @MainActor
-class CharacterListViewModel: ObservableObject {
+class CharacterListViewModel: CharacterListViewModelProtocol {
     @Published var characters: [Character] = []
     private var offset = 0
     private let limit = 20
@@ -17,7 +25,7 @@ class CharacterListViewModel: ObservableObject {
 
     func loadCharacters() {
         guard canLoadMoreCharacters && !isLoading else { return }
-
+        
         isLoading = true
         Task {
             do {
@@ -36,4 +44,3 @@ class CharacterListViewModel: ObservableObject {
         }
     }
 }
-

@@ -10,10 +10,10 @@ import SwiftUI
 @main
 struct MarvelApp: App {
     let persistenceController = PersistenceController.shared
-
+    
     init() {
     }
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
