@@ -9,26 +9,26 @@ import SwiftUI
 struct CharacterListView<ViewModel: CharacterListViewModelProtocol>: View {
     // MARK: - ViewModel Injection
     @ObservedObject private var viewModel: ViewModel
-
+    
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
-
+    
     var body: some View {
         // MARK: - Vista Principal
         NavigationView {
-                List {
-                    ForEach(Array(viewModel.characters.enumerated()), id: \.element.id) { (offset, character) in
-                        NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))) {
-                            CharacterRow(character: character)
-                        }.task {
-                            if viewModel.characters.count - 1 == offset {
-                                await viewModel.loadCharacters()
-                            }
+            List {
+                ForEach(Array(viewModel.characters.enumerated()), id: \.element.id) { (offset, character) in
+                    NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(character: character))) {
+                        CharacterRow(character: character)
+                    }.task {
+                        if viewModel.characters.count - 1 == offset {
+                            await viewModel.loadCharacters()
                         }
+                    }
                 }
             }
-                .navigationTitle(self.viewModel.title)
+            .navigationTitle(self.viewModel.title)
         }
         .task {
             if viewModel.characters.isEmpty {
@@ -49,7 +49,7 @@ struct CharacterListView<ViewModel: CharacterListViewModelProtocol>: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 })
-
+                
                 VStack(alignment: .leading) {
                     Text(character.name)
                         .font(.headline)
@@ -59,7 +59,7 @@ struct CharacterListView<ViewModel: CharacterListViewModelProtocol>: View {
             }
             .padding()
         }
-
+        
         @ViewBuilder
         func makeAsyncImage(url: URL?, successImage: @escaping (Image) -> some View) -> some View {
             AsyncImage(url: url) { phase in

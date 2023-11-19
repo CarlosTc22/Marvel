@@ -21,13 +21,13 @@ protocol CharacterDetailViewModelProtocol: ObservableObject {
 class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     @Published var seriesList: [Series] = []
     @Published var isLoading: Bool = true
-
+    
     private(set) var character: Character
-
+    
     init(character: Character) {
         self.character = character
     }
-
+    
     func loadSeries(forCharacterId id: Int) async {
         self.isLoading = true
         do {

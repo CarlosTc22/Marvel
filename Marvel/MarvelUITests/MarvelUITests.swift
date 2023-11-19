@@ -26,5 +26,4 @@ final class MarvelUITests: XCTestCase {
         XCTAssertTrue(firstCharacterCell.waitForExistence(timeout: 10), "No character cell found")
         firstCharacterCell.tap()
     }
-    
 }

@@ -10,25 +10,59 @@ import XCTest
 
 final class MarvelTests: XCTestCase {
     
-    var viewModel: CharacterListViewModel!
-    
-    @MainActor override func setUpWithError() throws {
-        super.setUp()
-        viewModel = CharacterListViewModel()
-    }
-    
-    override func tearDownWithError() throws {
-        viewModel = nil
-        super.tearDown()
-    }
-    
     @MainActor func testCharacterLoading() throws {
-        let expectation = self.expectation(description: "CharacterLoading")
-        viewModel.loadCharacters()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            expectation.fulfill()
+        Task {
+            let characters = [Character(id: 0, name: "name", description: "desc",
+                                        thumbnail: Thumbnail(path: "", extension: ""), comics: .init(items: []),
+                                        stories: .init(items: []), urls: .init())]
+            let viewModel = CharacterListViewModel(title: "Marvel",
+                                                   networkManager: MockNetworkManager(characters: characters))
+            await viewModel.loadCharacters()
+            
+            XCTAssertFalse(viewModel.canLoadMoreCharacters)
+            XCTAssertEqual(viewModel.characters, characters)
         }
-        waitForExpectations(timeout: 5, handler: nil)
-        XCTAssertFalse(viewModel.characters.isEmpty, "No characters loaded")
+    }
+    
+    @MainActor func testCharacterLoadingWhenResponseIsEmpty() throws {
+        Task {
+            let characters = [Character]()
+            let viewModel = CharacterListViewModel(title: "Marvel",
+                                                   networkManager: MockNetworkManager(characters: characters))
+            await viewModel.loadCharacters()
+            
+            XCTAssertFalse(viewModel.canLoadMoreCharacters)
+            XCTAssertEqual(viewModel.characters, characters)
+        }
+    }
+    
+    @MainActor func testTitle() throws {
+        Task {
+            let characters = [Character]()
+            let viewModel = CharacterListViewModel(title: "Marvel",
+                                                   networkManager: MockNetworkManager(characters: characters))
+            await viewModel.loadCharacters()
+            
+            XCTAssertEqual(viewModel.title, "Marvel")
+        }
+    }
+    
+}
+
+struct MockNetworkManager: NetworkManagerType {
+    
+    private let characters: [Character]
+    
+    init(characters: [Character]) {
+        self.characters = characters
+    }
+    
+    func fetchCharacters(offset: Int, limit: Int) async throws -> [Marvel.Character] {
+        return characters
+    }
+    
+    func fetchSeries(forCharacterId characterId: Int) async throws -> [Marvel.Series] {
+        return []
     }
 }
+

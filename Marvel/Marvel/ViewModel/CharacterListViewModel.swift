@@ -25,14 +25,14 @@ class CharacterListViewModel: CharacterListViewModelProtocol {
     private(set) var canLoadMoreCharacters = true
     private var isLoading = false
     var title: String
-
+    
     private(set) var networkManager: NetworkManagerType
-
+    
     init(title: String, networkManager: NetworkManagerType = NetworkManager.shared) {
         self.title = title
         self.networkManager = networkManager
     }
-
+    
     func loadCharacters() async {
         guard canLoadMoreCharacters && !isLoading else { return }
         

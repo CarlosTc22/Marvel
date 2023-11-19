@@ -1,13 +1,19 @@
+//
+//  CharacterDetailView.swift
+//  Marvel
+//  Created by Juan Carlos Torrejón Cañedo on 15/11/23.
+//
+
 import SwiftUI
 
 // MARK: - CharacterDetailView
 struct CharacterDetailView<ViewModel: CharacterDetailViewModelProtocol>: View {
     @ObservedObject var viewModel: ViewModel
-
+    
     init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
-
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -38,7 +44,7 @@ struct CharacterDetailView<ViewModel: CharacterDetailViewModelProtocol>: View {
             await viewModel.loadSeries(forCharacterId: viewModel.character.id)
         }
     }
-
+    
     @ViewBuilder
     private func CharacterImage(url: URL?, viewModel: ViewModel) -> some View {
         AsyncImage(url: url) { phase in
@@ -60,7 +66,7 @@ struct CharacterDetailView<ViewModel: CharacterDetailViewModelProtocol>: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func SeriesSection(viewModel: ViewModel) -> some View {
         if viewModel.isLoading {
@@ -69,7 +75,7 @@ struct CharacterDetailView<ViewModel: CharacterDetailViewModelProtocol>: View {
             Text("Series Featuring \(viewModel.character.name)")
                 .font(.headline)
                 .padding()
-
+            
             ForEach(viewModel.seriesList, id: \.id) { series in
                 SeriesRow(series: series, viewModel: viewModel)
             }
@@ -81,18 +87,18 @@ struct CharacterDetailView<ViewModel: CharacterDetailViewModelProtocol>: View {
 struct SeriesRow<ViewModel: CharacterDetailViewModelProtocol>: View {
     var series: Series
     var viewModel: ViewModel
-
+    
     var body: some View {
         HStack {
             makeAsyncImage(url: URL(string: series.thumbnail.fullPath()),
                            successImage: { image in
-                               image.resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 80, height: 120)
-                                    .cornerRadius(5)
-                           })
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 80, height: 120)
+                    .cornerRadius(5)
+            })
             .padding()
-
+            
             VStack(alignment: .leading) {
                 Text(series.title)
                     .font(.headline)
@@ -104,13 +110,13 @@ struct SeriesRow<ViewModel: CharacterDetailViewModelProtocol>: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.leading, 10)
-
+            
             Spacer()
         }
         .padding(.vertical, 5)
         .padding(.leading, 16)
     }
-
+    
     @ViewBuilder
     private func makeAsyncImage(url: URL?, successImage: @escaping (Image) -> some View) -> some View {
         AsyncImage(url: url) { phase in
