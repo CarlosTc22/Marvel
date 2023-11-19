@@ -52,19 +52,25 @@ enum APIEndpoint {
 // Configuración Async-Await para la API de Marvel
 let baseURL = "https://gateway.marvel.com/v1/public/"
 
-class NetworkManager {
+protocol NetworkManagerType {
+    func fetchCharacters(offset: Int, limit: Int) async throws -> [Character]
+    func fetchSeries(forCharacterId characterId: Int) async throws -> [Series]
+}
+
+struct NetworkManager: NetworkManagerType {
     static let shared = NetworkManager()
     
     func fetchCharacters(offset: Int = 0, limit: Int = 20) async throws -> [Character] {
         let request = URLRequest(url: APIEndpoint.characters.urlWithPagination(offset: offset, limit: limit))
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }
         
         let marvelResponse = try JSONDecoder().decode(MarvelResponse.self, from: data)
         return marvelResponse.data.results
+        
     }
     
     func fetchSeries(forCharacterId characterId: Int) async throws -> [Series] {
@@ -79,4 +85,3 @@ class NetworkManager {
         return seriesResponse.data.results
     }
 }
-

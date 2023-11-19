@@ -8,34 +8,35 @@
 import Foundation
 
 // MARK: - Protocolo -
+@MainActor
 protocol CharacterDetailViewModelProtocol: ObservableObject {
     var seriesList: [Series] { get }
     var isLoading: Bool { get set }
+    var character: Character { get }
     func loadSeries(forCharacterId id: Int) async
 }
 
 // MARK: - Clase -
+@MainActor
 class CharacterDetailViewModel: CharacterDetailViewModelProtocol {
     @Published var seriesList: [Series] = []
     @Published var isLoading: Bool = true
 
-    func loadSeries(forCharacterId id: Int) async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
+    private(set) var character: Character
 
+    init(character: Character) {
+        self.character = character
+    }
+
+    func loadSeries(forCharacterId id: Int) async {
+        self.isLoading = true
         do {
             let fetchedSeries = try await NetworkManager.shared.fetchSeries(forCharacterId: id)
-            DispatchQueue.main.async {
-                self.seriesList = fetchedSeries
-                self.isLoading = false
-            }
+            self.seriesList = fetchedSeries
+            self.isLoading = false
         } catch {
-            DispatchQueue.main.async {
-                print("Error fetching series: \(error)")
-                self.isLoading = false
-            }
+            print("Error fetching series: \(error)")
+            self.isLoading = false
         }
     }
 }
-

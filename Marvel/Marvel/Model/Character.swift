@@ -18,7 +18,7 @@ struct CharacterData: Codable {
     let results: [Character]
 }
 
-struct Character: Codable {
+struct Character: Codable, Equatable {
     let id: Int
     let name, description: String
     let thumbnail: Thumbnail
@@ -27,7 +27,7 @@ struct Character: Codable {
     let urls: [URLType]
 }
 
-struct Thumbnail: Codable {
+struct Thumbnail: Codable, Equatable {
     let path: String
     let `extension`: String
     
@@ -37,26 +37,26 @@ struct Thumbnail: Codable {
     }
 }
 
-struct ComicList: Codable {
+struct ComicList: Codable, Equatable {
     let items: [Comic]
 }
 
-struct Comic: Codable {
+struct Comic: Codable, Equatable {
     let resourceURI: String
     let name: String
 }
 
-struct StoryList: Codable {
+struct StoryList: Codable, Equatable {
     let items: [Story]
 }
 
-struct Story: Codable {
+struct Story: Codable, Equatable {
     let resourceURI: String
     let name: String
     let type: String
 }
 
-struct URLType: Codable {
+struct URLType: Codable, Equatable {
     let type: String
     let url: String
 }

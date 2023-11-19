@@ -112,14 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				07762F812B04CA8800DAE444 /* App */,
-				07762F822B04CB6900DAE444 /* Tools */,
 				07762F802B04CA8000DAE444 /* Services */,
 				07762F7F2B04CA0F00DAE444 /* Resources */,
 				07762F7E2B04C9EC00DAE444 /* Model */,
 				07762F7D2B04C9D700DAE444 /* View */,
 				07762F7C2B04C9C500DAE444 /* ViewModel */,
-				07762F4E2B04C6D800DAE444 /* Persistence.swift */,
-				07762F532B04C6D800DAE444 /* ContentView.swift */,
+				07762F922B0A66B200DAE444 /* LocalStorage */,
 				07762F572B04C6DA00DAE444 /* Marvel.entitlements */,
 				07762F502B04C6D800DAE444 /* Marvel.xcdatamodeld */,
 				07762F582B04C6DA00DAE444 /* Preview Content */,
@@ -198,15 +196,17 @@
 			isa = PBXGroup;
 			children = (
 				07762F4C2B04C6D700DAE444 /* MarvelApp.swift */,
+				07762F532B04C6D800DAE444 /* ContentView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
 		};
-		07762F822B04CB6900DAE444 /* Tools */ = {
+		07762F922B0A66B200DAE444 /* LocalStorage */ = {
 			isa = PBXGroup;
 			children = (
+				07762F4E2B04C6D800DAE444 /* Persistence.swift */,
 			);
-			path = Tools;
+			path = LocalStorage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
